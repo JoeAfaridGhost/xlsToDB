@@ -401,6 +401,10 @@ def main():
         # 导入 Contract 表
         contract_data_to_address = import_to_contract_table(engine1, contract_data)
 
+        # 材料用 Excel 导出
+        contract_data_to_address.to_excel('output.xlsx', sheet_name= 'sheet1')
+        print("已经将清洗后的材料已excel的格式导出")
+
         # 导入 Payment 表
         import_to_payment_table(engine1, contract_data)
 
