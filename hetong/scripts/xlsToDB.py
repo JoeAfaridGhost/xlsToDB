@@ -372,7 +372,7 @@ def import_to_address_table(engine, address_data, contract_data_sorted):
         print("数据成功导入到 rent_address 表！")
     except Exception as e:
         raise Exception(f"数据导入失败：{e}")
-
+    return merged_data
 
 
 
@@ -402,14 +402,18 @@ def main():
         contract_data_to_address = import_to_contract_table(engine1, contract_data)
 
         # 材料用 Excel 导出
-        contract_data_to_address.to_excel('output.xlsx', sheet_name= 'sheet1')
+        # contract_data_to_address.to_excel('output1.xlsx', sheet_name= 'sheet1')
         print("已经将清洗后的材料已excel的格式导出")
 
         # 导入 Payment 表
         import_to_payment_table(engine1, contract_data)
 
         #导入 Address 表
-        import_to_address_table(engine2, address_data, contract_data_to_address)
+        final_address_data = import_to_address_table(engine2, address_data, contract_data_to_address)
+
+        # 导出最终地址的信息
+        final_address_data.to_excel('output2.xlsx', sheet_name='sheet1')
+        print("最终的地址信息已经已excel的格式导出！")
 
         print("数据导入完成！")
     except Exception as e:
